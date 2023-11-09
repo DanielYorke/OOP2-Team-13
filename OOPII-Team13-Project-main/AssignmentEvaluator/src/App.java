@@ -33,7 +33,6 @@ public class App {
     }
 
     public static void main(String[] args) {
-
         Scanner in = new Scanner(System.in);
 
         System.out.println("Please input desired file name: ");
@@ -44,6 +43,7 @@ public class App {
 
         if (!zipFile.exists() || !zipFile.isFile() || !zipFileName.endsWith(".zip")) {
             System.out.println("No Java zip file found.");
+            in.close();
             return; // Exit the program if the zip file is not found
         }
 
@@ -52,6 +52,8 @@ public class App {
             System.out.println("Zip file extracted successfully.");
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            in.close();
         }
     }
 }
