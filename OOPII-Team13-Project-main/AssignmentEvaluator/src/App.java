@@ -1,11 +1,19 @@
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public class App {
     public static void extractAndProcessStudentSubmissions(String zipFileName, String outputFolder) throws IOException {
         byte[] buffer = new byte[1024];
+        File outputDirectory = new File(outputFolder);
+        if (outputDirectory.exists()) {
+            System.out.println("Files have already been extracted. Skipping extraction.");
+            return;
+        }
 
         try (ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(zipFileName))) {
             ZipEntry zipEntry;
@@ -28,10 +36,7 @@ public class App {
                         }
                     }
                 }
-
-                // Process Java files within the extracted submission
                 if (entryName.endsWith(".zip")) {
-                    processStudentSubmission(outputPath);
                 }
             }
         }
@@ -39,15 +44,9 @@ public class App {
 
     public static void processStudentSubmission(String submissionPath) {
         File submissionFile = new File(submissionPath);
-
-        // Check if the submission is a zip file
         if (submissionFile.isFile() && submissionPath.endsWith(".zip")) {
             try {
-                // Extract the contents of the student's submission
                 extractAndProcessStudentSubmissions(submissionPath, "studentSubmission");
-
-                // Now you can process the Java files within the extracted student submission
-                // Iterate through the files, look for ".java" files, and analyze them.
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -66,12 +65,26 @@ public class App {
         if (!zipFile.exists() || !zipFile.isFile() || !zipFileName.endsWith(".zip")) {
             System.out.println("No valid zip file found.");
             in.close();
-            return; // Exit the program if the zip file is not found
+            return; 
         }
 
         try {
             extractAndProcessStudentSubmissions(zipFileName, outputFolder);
             System.out.println("Student submissions extracted and processed successfully.");
+
+            List<TextSimilarityChecker> checkers = new ArrayList<>();
+            checkers.add(new JaccardSimilarityChecker(1)); 
+            checkers.add(new JaccardSimilarityChecker(2));
+            checkers.add(new JaccardSimilarityChecker(3));
+            checkers.add(new JaccardSimilarityChecker(4));
+            checkers.add(new JaccardSimilarityChecker(5));
+            checkers.add(new JaccardSimilarityChecker(6));
+            checkers.add(new JaccardSimilarityChecker(7));
+            checkers.add(new JaccardSimilarityChecker(8));
+            for (TextSimilarityChecker checker : checkers) {
+            System.out.println(checker.evaluate("Passenger.java", "PassengerSpec.java"));
+            }
+            
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -79,3 +92,6 @@ public class App {
         }
     }
 }
+
+
+
