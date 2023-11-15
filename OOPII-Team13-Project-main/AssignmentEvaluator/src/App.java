@@ -67,29 +67,66 @@ public class App {
             in.close();
             return; 
         }
-
         try {
             extractAndProcessStudentSubmissions(zipFileName, outputFolder);
             System.out.println("Student submissions extracted and processed successfully.");
-
-            List<TextSimilarityChecker> checkers = new ArrayList<>();
-            checkers.add(new JaccardSimilarityChecker(1)); 
-            checkers.add(new JaccardSimilarityChecker(2));
-            checkers.add(new JaccardSimilarityChecker(3));
-            checkers.add(new JaccardSimilarityChecker(4));
-            checkers.add(new JaccardSimilarityChecker(5));
-            checkers.add(new JaccardSimilarityChecker(6));
-            checkers.add(new JaccardSimilarityChecker(7));
-            checkers.add(new JaccardSimilarityChecker(8));
-            for (TextSimilarityChecker checker : checkers) {
-            System.out.println(checker.evaluate("Passenger.java", "PassengerSpec.java"));
+            
+            File folder = new File(outputFolder);
+            File[] files = {
+                new File(outputFolder + "/PassengerAttributeSpec.java"),
+                new File(outputFolder + "/PassengerClassSignatures.java"),
+                // new File(outputFolder + "/File3.java")
+            };
+            
+            List<String> fileNames = new ArrayList<>();
+            
+            if (files != null) {
+                for (File file : files) {
+                    fileNames.add(file.getName());
+                }
             }
+            
+            List<TextSimilarityChecker> checkers = new ArrayList<>();
+            
+            for (int i = 0; i < fileNames.size(); i++) {
+                for (int j = i + 1; j < fileNames.size(); j++) {
+                    for (int similarityMetric = 1; similarityMetric <= 8; similarityMetric++) {
+                        TextSimilarityChecker checker;
+                        
+                        if (similarityMetric == 1 ) {
+                            checker = new JaccardSimilarityChecker(similarityMetric);
+                            checkers.add(checker);
+                            System.out.println(checker.evaluate("PassengerAttributeSpec.java","Passenger.java"));
+                        } else if (similarityMetric == 2) {
+                            checker = new JaccardSimilarityChecker(similarityMetric);
+                            checkers.add(checker);
+                            System.out.println(checker.evaluate("PassengerClassSignatures.java", "Passenger.java"));
+                        } else if (similarityMetric == 3) {
+                            checker = new JaccardSimilarityChecker(similarityMetric);
+                            checkers.add(checker);
+                            System.out.println(checker.evaluate("PassengerStates.java", "Passenger.java"));
+                        } else if (similarityMetric == 4) {
+                            checker = new JaccardSimilarityChecker(similarityMetric);
+                            checkers.add(checker);
+                            System.out.println(checker.evaluate("PassengerAccessModifiers.java", "Passenger.java"));
+                        } else if (similarityMetric == 5) {
+                            checker = new JaccardSimilarityChecker(similarityMetric);
+                            checkers.add(checker);
+                            System.out.println(checker.evaluate("PassengerConstructors.java", "Passenger.java"));
+                        } 
+                    }
+                }
+            }
+            
+            // Perform operations with 'checkers'
             
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            in.close();
+            // Handle closing resources here if necessary
         }
+        
+        
     }
 }
 

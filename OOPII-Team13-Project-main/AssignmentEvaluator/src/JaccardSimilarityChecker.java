@@ -1,5 +1,5 @@
-import java.util.HashSet;
-import java.util.Set;
+/*import java.util.HashSet;
+import java.util.Set;*/
 
 public class JaccardSimilarityChecker extends TextSimilarityChecker {
     public JaccardSimilarityChecker() {
@@ -17,212 +17,237 @@ public class JaccardSimilarityChecker extends TextSimilarityChecker {
         if (similarityMetric == 1) {
             similarityMetricChecker="Attribute Similarity Percentage:";
             similarity= new Jaccard().measure(text1, text2);
-            if(similarity>=0.2)
+            if (similarity<=0.1)
             {
-                System.out.println("All Attributes with Correct Naming Convention\n"+similarityMetricChecker);
-                //return 100.0;
+                similarity=similarity*10;
+            }
+            if(similarity>=0.8)
+            {
+                System.out.println("\nAll Attributes with Correct Naming Convention. "+similarityMetricChecker);
                 return similarity;
             }
-            else if(similarity<0.2)
+            else if(similarity<0.8)
             {  
-                double simPercent=(similarity*0.2*25);
-                if(similarity>=0.15)
+                //double simPercent=(similarity*9*25);
+                if(similarity>=0.7)
                 {
-                    System.out.println("Most Attributes with Correct Naming Convention\n"+similarityMetricChecker);
+                    System.out.println("\nMost Attributes with Correct Naming Convention. "+similarityMetricChecker);
                 }
-                if(similarity>=0.1)
+                if(similarity>=0.4)
                 {
-                    System.out.println("Some Attributes with Correct Naming Convention\n"+similarityMetricChecker);
+                    System.out.println("\nSome Attributes with Correct Naming Convention. "+similarityMetricChecker);
                 }
-                else if(similarity<0.15)
+                else if(similarity<0.4)
                 {
-                    System.out.println("Barely any Attributes with Correct Naming Convention\n"+similarityMetricChecker);
+                    System.out.println("\nBarely any Attributes with Correct Naming Convention. "+similarityMetricChecker);
                 }
-                similarity=simPercent;
             }
         }
         if (similarityMetric == 2) {
             similarityMetricChecker="Class Signatures Similarity Percentage:";
             similarity= new Jaccard().measure(text1, text2);
-            if(similarity>=0.2)
+            if (similarity<=0.1)
             {
-                System.out.println("All Class Signatures are Correct\n"+similarityMetricChecker);
-                return 100.0;
+                similarity=similarity*10;
             }
-            else if(similarity<0.2)
+            if(similarity>=0.8)
+            {
+                System.out.println("\nAll Class Signatures are Correct. "+similarityMetricChecker);
+                return similarity;
+            }
+            else if(similarity<0.8)
             {  
-                double simPercent=(similarity*0.2*25);
-                if(similarity>=0.15)
+                //double simPercent=(similarity*9*25);
+                if(similarity>=0.7)
                 {
-                    System.out.println("Most Class Signatures are Correct\n"+similarityMetricChecker);
+                    System.out.println("\nMost Class Signatures are Correct. "+similarityMetricChecker);
                 }
-                if(similarity>=0.1)
+                if(similarity>=0.4)
                 {
-                    System.out.println("Some Class Signatures are Correct\n"+similarityMetricChecker);
+                    System.out.println("\nSome Class Signatures are Correct. "+similarityMetricChecker);
                 }
-                else if(similarity<0.15)
+                else if(similarity<0.4)
                 {
-                    System.out.println("Barely any Class Signatures are Correct\n"+similarityMetricChecker);
+                    System.out.println("\nBarely any Class Signatures are Correct. "+similarityMetricChecker);
                 }
-                similarity=simPercent;
             }
         }
         if (similarityMetric == 3) {
             similarityMetricChecker="State Variables Similarity Percentage:";
             similarity= new Jaccard().measure(text1, text2);
-            if(similarity>=0.2)
+            if (similarity<=0.1)
             {
-                System.out.println("All States are Correct\n"+similarityMetricChecker);
-                return 100.0;
+                similarity=similarity*10;
             }
-            else if(similarity<0.2)
+            if(similarity>=0.8)
+            {
+                System.out.println("\nAll States are Correct. "+similarityMetricChecker);
+                return similarity;
+            }
+            else if(similarity<0.8)
             {  
-                double simPercent=(similarity*0.2*25);
-                if(similarity>=0.15)
+                //double simPercent=(similarity*9*25);
+                if(similarity>=0.7)
                 {
-                    System.out.println("Most States are Correct\n"+similarityMetricChecker);
+                    System.out.println("\nMost States are Correct. "+similarityMetricChecker);
                 }
-                if(similarity>=0.1)
+                if(similarity>=0.4)
                 {
-                    System.out.println("Some States are Correct\n"+similarityMetricChecker);
+                    System.out.println("\nSome States are Correct. "+similarityMetricChecker);
                 }
-                else if(similarity<0.15)
+                else if(similarity<0.4)
                 {
-                    System.out.println("Barely any States are Correct\n"+similarityMetricChecker);
+                    System.out.println("\nBarely any States are Correct. "+similarityMetricChecker);
                 }
-                similarity=simPercent;
             }
         }
         if (similarityMetric == 4) {
             similarityMetricChecker="Access Modifiers Similarity Percentage:";
             similarity= new Jaccard().measure(text1, text2);
-            if(similarity>=0.2)
+            if (similarity<=0.16)
             {
-                System.out.println("All Access Modifiers are Correct\n"+similarityMetricChecker);
-                return 100.0;
+                similarity=similarity*5;
             }
-            else if(similarity<0.2)
+            if(similarity>=0.8)
+            {
+                System.out.println("\nAll Access Modifiers are Correct. "+similarityMetricChecker);
+                return similarity;
+            }
+            else if(similarity<0.8)
             {  
-                double simPercent=(similarity*0.2*25);
-                if(similarity>=0.15)
+                //double simPercent=(similarity*9*25);
+                if(similarity>=0.7)
                 {
-                    System.out.println("Most Access Modifiers are Correct\n"+similarityMetricChecker);
+                    System.out.println("\nMost Access Modifiers are Correct. "+similarityMetricChecker);
+                    return similarity;
                 }
-                if(similarity>=0.1)
+                if(similarity>=0.4)
                 {
-                    System.out.println("Some Access Modifiers are Correct\n"+similarityMetricChecker);
+                    System.out.println("\nSome Access Modifiers are Correct. "+similarityMetricChecker);
                 }
-                else if(similarity<0.15)
+                else if(similarity<0.4)
                 {
-                    System.out.println("Barely any Access Modifiers are Correct\n"+similarityMetricChecker);
+                    System.out.println("\nBarely any Access Modifiers are Correct. "+similarityMetricChecker);
                 }
-                similarity=simPercent;
             }
+        
         }
         if (similarityMetric == 5) {
             similarityMetricChecker="Constructors Similarity Percentage:";
             similarity= new Jaccard().measure(text1, text2);
-            if(similarity>=0.2)
+            if (similarity<=0.1)
             {
-                System.out.println("All Constructors are Correct\n"+similarityMetricChecker);
-                return 100.0;
+                similarity=similarity*10;
             }
-            else if(similarity<0.2)
+            if(similarity>=0.8)
+            {
+                System.out.println("\nAll Constructors are Correct. "+similarityMetricChecker);
+                return similarity;
+            }
+            else if(similarity<0.8)
             {  
-                double simPercent=(similarity*0.2*25);
-                if(similarity>=0.15)
+                //double simPercent=(similarity*9*25);
+                if(similarity>=0.7)
                 {
-                    System.out.println("Most Constructors are Correct\n"+similarityMetricChecker);
+                    System.out.println("\nMost Constructors are Correct. "+similarityMetricChecker);
                 }
-                if(similarity>=0.1)
+                if(similarity>=0.4)
                 {
-                    System.out.println("Some Constructors are Correct\n"+similarityMetricChecker);
+                    System.out.println("\nSome Constructors are Correct. "+similarityMetricChecker);
                 }
-                else if(similarity<0.15)
+                else if(similarity<0.4)
                 {
-                    System.out.println("Barely any Constructors are Correct\n"+similarityMetricChecker);
+                    System.out.println("\nBarely any Constructors are Correct. "+similarityMetricChecker);
                 }
-                similarity=simPercent;
             }
         }
         if (similarityMetric == 6) {
             similarityMetricChecker="Methods Similarity Percentage:";
             similarity= new Jaccard().measure(text1, text2);
-            if(similarity>=0.2)
+            if (similarity<=0.1)
             {
-                System.out.println("All Methods are Correct\n"+similarityMetricChecker);
-                return 100.0;
+                similarity=similarity*10;
             }
-            else if(similarity<0.2)
+            if(similarity>=0.8)
+            {
+                System.out.println("\nAll Methods are Correct. "+similarityMetricChecker);
+                return similarity;
+            }
+            else if(similarity<0.8)
             {  
-                double simPercent=(similarity*0.2*25);
-                if(similarity>=0.15)
+                //double simPercent=(similarity*9*25);
+                if(similarity>=0.7)
                 {
-                    System.out.println("Most Methods are Correct\n"+similarityMetricChecker);
+                    System.out.println("\nMost Methods are Correct. "+similarityMetricChecker);
                 }
-                if(similarity>=0.1)
+                if(similarity>=0.4)
                 {
-                    System.out.println("Some Methods are Correct\n"+similarityMetricChecker);
+                    System.out.println("\nSome Methods are Correct. "+similarityMetricChecker);
                 }
-                else if(similarity<0.15)
+                else if(similarity<0.4)
                 {
-                    System.out.println("Barely any Methods are Correct\n"+similarityMetricChecker);
+                    System.out.println("\nBarely any Methods are Correct. "+similarityMetricChecker);
                 }
-                similarity=simPercent;
             }
         } 
         if (similarityMetric == 7) {
             similarityMetricChecker="Relationships Similarity Percentage:";
             similarity= new Jaccard().measure(text1, text2);
-            if(similarity>=0.2)
+            if (similarity<=0.1)
             {
-                System.out.println("All Relationships are Correct\n"+similarityMetricChecker);
-                return 100.0;
+                similarity=similarity*10;
             }
-            else if(similarity<0.2)
+            if(similarity>=0.8)
+            {
+                System.out.println("\nAll Relationships are Correct. "+similarityMetricChecker);
+                return similarity;
+            }
+            else if(similarity<0.8)
             {  
-                double simPercent=(similarity*0.2*25);
-                if(similarity>=0.15)
+                //double simPercent=(similarity*9*25);
+                if(similarity>=0.7)
                 {
-                    System.out.println("Most Relationships are Correct\n"+similarityMetricChecker);
+                    System.out.println("\nMost Relationships are Correct. "+similarityMetricChecker);
                 }
-                if(similarity>=0.1)
+                if(similarity>=0.4)
                 {
-                    System.out.println("Some Relationships are Correct\n"+similarityMetricChecker);
+                    System.out.println("\nSome Relationships are Correct. "+similarityMetricChecker);
                 }
-                else if(similarity<0.15)
+                else if(similarity<0.4)
                 {
-                    System.out.println("Barely any Access Modifiers are Correct\n"+similarityMetricChecker);
+                    System.out.println("\nBarely any Access Modifiers are Correct. "+similarityMetricChecker);
                 }
-                similarity=simPercent;
             }
         }
         if (similarityMetric == 8) {
             similarityMetricChecker="Abstractions Similarity Percentage:";
             similarity= new Jaccard().measure(text1, text2);
-            if(similarity>=0.2)
+            if (similarity<=0.1)
             {
-                System.out.println("All Abstractions are Correct\n"+similarityMetricChecker);
-                return 100.0;
+                similarity=similarity*10;
             }
-            else if(similarity<0.2)
+            if(similarity>=0.8)
+            {
+                System.out.println("\nAll Abstractions are Correct. "+similarityMetricChecker);
+                return similarity;
+            }
+            else if(similarity<0.8)
             {  
-                double simPercent=(similarity*0.2*25);
-                if(similarity>=0.15)
+                //double simPercent=(similarity*9*25);
+                if(similarity>=0.7)
                 {
-                    System.out.println("Most Abstractions are Correct\n"+similarityMetricChecker);
+                    System.out.println("\nMost Abstractions are Correct. "+similarityMetricChecker);
                 }
-                if(similarity>=0.1)
+                if(similarity>=0.4)
                 {
-                    System.out.println("Some Abstractions are Correct\n"+similarityMetricChecker);
+                    System.out.println("\nSome Abstractions are Correct. "+similarityMetricChecker);
                 }
-                else if(similarity<0.15)
+                else if(similarity<0.4)
                 {
-                    System.out.println("Barely any Abstractions are Correct\n"+similarityMetricChecker);
+                    System.out.println("\nBarely any Abstractions are Correct. "+similarityMetricChecker);
                 }
-                similarity=simPercent;
             }
-        }       
+        }//*/       
         return similarity;
     }
 }
