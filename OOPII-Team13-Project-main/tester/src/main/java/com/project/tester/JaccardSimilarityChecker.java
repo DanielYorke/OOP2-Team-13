@@ -33,6 +33,7 @@ public class JaccardSimilarityChecker extends TextSimilarityChecker {
                 //double simPercent=(similarity*9*25);
                 if(similarity>=0.7)
                 {
+                    // return 
                     System.out.println("\nMost Attributes with Correct Naming Convention. "+similarityMetricChecker);
                 }
                 if(similarity>=0.4)

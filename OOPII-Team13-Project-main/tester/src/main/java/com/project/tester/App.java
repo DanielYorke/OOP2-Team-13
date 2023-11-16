@@ -58,6 +58,9 @@ public class App {
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
+        String pdfInformation = new String(); // here
+        PdfGenerator pdfFile = new PdfGenerator(); // here
+        double data = 0; // here
 
         System.out.println("Please input the zip file containing student submissions: ");
         String zipFileName = in.nextLine();
@@ -95,34 +98,44 @@ public class App {
                 for (int j = i + 1; j < fileNames.size(); j++) {
                     for (int similarityMetric = 1; similarityMetric <= 8; similarityMetric++) {
                         TextSimilarityChecker checker;
-                        
+                        pdfInformation = "Passenger Class Feedback: \n";
                         if (similarityMetric == 1 ) {
                             checker = new JaccardSimilarityChecker(similarityMetric);
                             checkers.add(checker);
-                            System.out.println(checker.evaluate("PassengerAttributeSpec.java","Passenger.java"));
+                            data = checker.evaluate("PassengerAttributeSpec.java","Passenger.java");
+                            System.out.println(data);
+                            pdfInformation += "PassengerAttributeSpec: " + data;
                         } else if (similarityMetric == 2) {
                             checker = new JaccardSimilarityChecker(similarityMetric);
                             checkers.add(checker);
-                            System.out.println(checker.evaluate("PassengerClassSignatures.java", "Passenger.java"));
+                            data = checker.evaluate("PassengerClassSignatures.java", "Passenger.java");
+                            System.out.println(data);
+                            pdfInformation += "PassengerClassSignatures: " + data;
                         } else if (similarityMetric == 3) {
                             checker = new JaccardSimilarityChecker(similarityMetric);
                             checkers.add(checker);
-                            System.out.println(checker.evaluate("PassengerStates.java", "Passenger.java"));
+                            data = checker.evaluate("PassengerStates.java", "Passenger.java");
+                            System.out.println(data);
+                            pdfInformation += "PassengerStates: " + data;
                         } else if (similarityMetric == 4) {
                             checker = new JaccardSimilarityChecker(similarityMetric);
                             checkers.add(checker);
-                            System.out.println(checker.evaluate("PassengerAccessModifiers.java", "Passenger.java"));
+                            data = checker.evaluate("PassengerAccessModifiers.java", "Passenger.java");
+                            System.out.println(data);
+                            pdfInformation += "PassengerAccessModifiers: " + data;
                         } else if (similarityMetric == 5) {
                             checker = new JaccardSimilarityChecker(similarityMetric);
                             checkers.add(checker);
-                            System.out.println(checker.evaluate("PassengerConstructors.java", "Passenger.java"));
+                            data = checker.evaluate("PassengerConstructors.java", "Passenger.java");
+                            System.out.println(data);
+                            pdfInformation += "PassengerConstructors: " + data;
                         } 
                     }
                 }
             }
-            
+            pdfFile.createPDF(pdfInformation);
             // Perform operations with 'checkers'
-            
+            in.close();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
