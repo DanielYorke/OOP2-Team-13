@@ -22,7 +22,7 @@ public class PassengerTest {
         Passenger testPassenger = new Passenger("AB123456", "John", "Doe", "FL123");
         assertInstanceOf(int, testPassenger.getNumLuggage());
     }
-
+    
     @Test
     public void testAssignRandomCabinClass() {
         // Create a passenger instance
