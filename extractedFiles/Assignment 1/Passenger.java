@@ -1,72 +1,101 @@
-//816019400
-//Daniel Yorke
-import java.util.Random;
 
+import java.util.Random;
 public class Passenger
 {
-    private String passportNumber;
-    private String flightNo;
-    private String firstName;
-    private String lastName;
-    private int numLuggage;
-    private char cabinClass;
-    
-    Passenger(String passportNumber ,String firstName, String lastName, String flightNo){
-        this.passportNumber = passportNumber;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.flightNo = flightNo;
-        Random rand = new Random();
-        this.numLuggage = rand.nextInt(3);
-        assignRandomCabinClass();
-        
-    }
-    
-    public void assignRandomCabinClass( ){
-        char[] cabinClasses= {'F','B','P','E'};
-        Random rand = new Random();
-        this.cabinClass = cabinClasses[rand.nextInt(3)];
-        
-    }
-    
-    public String toString(){
-        String output = new String();
-        output = String.format("PP NO. %s NAME: %c.%s NUMLUGGAGE: %d CLASS: %c",getPassportNumber(), getFirstName().charAt(0),getLastName(), getNumLuggage(),getCabinClass());
-        return output;
-    }
-        
-    
-    public boolean equalsFlight(String obj){
-        if(this.flightNo.equals(obj)){
-            return true;
-        }
-        return false;
-    }
-    
-    // accessors
-    
+    // instance variables - replace the example below with your own
+    public String passportNumber;
+    public String flightNo;
+    public String firstName;
+    public String lastName;
+    public int numLuggage;
+    public char cabinClass;
+
     public String getPassportNumber(){
-        return this.passportNumber;
+        return passportNumber;
     }
     
     public String getFlightNo(){
-        return this.flightNo;
+        return flightNo;
     }
     
     public String getFirstName(){
-        return this.firstName;
+        return firstName;
     }
     
-    public String getLastName(){
-        return this.lastName;
+        public String getLastName(){
+        return lastName;
     }
     
-    public int getNumLuggage(){
+    public int readNumLuggage(){
         return numLuggage;
     }
     
-    public char getCabinClass(){
+    public char toCharCc(){
         return cabinClass;
     }
+        
+    // Constructor for objects of class Passenger
+    public Passenger(String passportNumber, String firstName, String lastName, 
+    String flightNo)
+    {
+        // initialise instance variables
+        setPassportNumber(passportNumber);
+        setFlightNo(flightNo);
+        setFirstName(firstName);
+        setLastName(lastName);
+        assignRandomCabinClass( );
+    }
+    //Mutators-fix every same string value
+    private void setPassportNumber(String value)
+    { 
+           passportNumber = value;  
+    } 
     
+    private void setFlightNo(String value)
+    {
+           flightNo = value;  
+    }
+    
+    private void setFirstName(String value)
+    { 
+           firstName = value;  
+    }
+    
+    private void setLastName(String value)
+    { 
+           lastName = value;  
+    }
+    
+    public void assignRandomCabinClass( )
+    {
+        Random r;
+        r= new Random();
+        int cabinRandomInteger;
+        cabinRandomInteger=r.nextInt(3);
+        numLuggage = r.nextInt(3);
+        if (cabinRandomInteger==0)
+        {
+            cabinClass='F';
+        }
+        else if (cabinRandomInteger==1)
+        {
+            cabinClass='B';
+        }
+        else if (cabinRandomInteger==2)
+        {
+            cabinClass='P';
+        }
+        else if (cabinRandomInteger==3)
+        {
+            cabinClass='E';
+        }
+        return;
+    }
+    
+    public String toString( )
+    {
+        String name= getFirstName().substring(0,1)+"."+getLastName();
+        String details= "PP NO: "+getPassportNumber()+" Name: "+name+" NUMLUGGAGE: "+readNumLuggage()+" CLASS: "+toCharCc();
+        return details;
+    }
 }
