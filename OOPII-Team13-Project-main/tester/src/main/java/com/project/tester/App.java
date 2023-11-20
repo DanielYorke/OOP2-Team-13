@@ -234,7 +234,7 @@ public class App {
                 }
             }
         
-            pdfFile.createPDF(pdfInformation);
+           // pdfFile.createPDF(pdfInformation);
             // Perform operations with 'checkers'
         } catch (IOException e) {
             e.printStackTrace();

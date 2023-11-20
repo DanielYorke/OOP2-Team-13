@@ -23,7 +23,7 @@ public class AppTest
         assertTrue( true );
     //}
 
-        Result result = JUnitCore.runClasses(LuggageSlipTest.class);
+        Result result = JUnitCore.runClasses(FlightTest.class);
 
         // Check the test results
         if (result.wasSuccessful()) {
