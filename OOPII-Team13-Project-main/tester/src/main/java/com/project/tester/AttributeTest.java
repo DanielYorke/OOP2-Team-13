@@ -33,7 +33,6 @@ public class AttributeTest implements Test{
                 // System.out.println(scanner.nextLine().trim());
                 // System.out.println(String.format("\t\tFile line :", line.trim()));
 				if(scanner.nextLine().trim().equals(key)){
-                    System.out.println("\n\t attribute test passed\n");
                     scanner.close();
                     return 1;
                 }
@@ -46,9 +45,12 @@ public class AttributeTest implements Test{
 
         return 0;
     }
+    public String toString(){
+        return String.format("Score : %d", execute());
+    }
 
-    // public static void main(String[] args) {
-    //     AttributeTest t = new AttributeTest("public","String","passportNumber","Passenger.java");
-    //     System.out.println(t.execute());
-    // }
+    public static void main(String[] args) {
+        AttributeTest t = new AttributeTest("public","String","passportNumber","Passenger.java");
+        System.out.println(t.execute());
+    }
 }

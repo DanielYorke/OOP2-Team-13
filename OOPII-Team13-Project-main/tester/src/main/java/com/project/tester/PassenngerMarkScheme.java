@@ -34,6 +34,9 @@ public class PassenngerMarkScheme extends MarkScheme{
     public void removeTest(Test t){
         tests.remove(t);
     }
+    public String toString(){
+        return String.format("Passenger Class : %d/16", execute());
+    }
     // public static void main(String[] args) {
     //     System.out.println("\tPasseneger mark scheme test");
     //     PassenngerMarkScheme t = new PassenngerMarkScheme("Passenger.java");

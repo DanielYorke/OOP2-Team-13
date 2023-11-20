@@ -9,6 +9,7 @@ public class LuggageSlipMarkScheme extends MarkScheme{
     LuggageSlipMarkScheme(String file){
         score = 0;
         this.filename = file;
+        tests = new ArrayList<Test>();
         tests.add(new AttributeTest("private","Passenger","owner",filename));
         tests.add(new AttributeTest("private","int","luggageSlipIDCounter",filename));
         tests.add(new AttributeTest("private","String","luggageSlipID",filename));
@@ -30,5 +31,8 @@ public class LuggageSlipMarkScheme extends MarkScheme{
     }
     public void removeTest(Test t){
         tests.remove(t);
+    }
+    public String toString(){
+        return String.format("LuggageSlip Class : %d/14", execute());
     }
 }

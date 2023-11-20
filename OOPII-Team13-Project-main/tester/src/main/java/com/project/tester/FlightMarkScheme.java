@@ -9,6 +9,7 @@ public class FlightMarkScheme extends MarkScheme{
     FlightMarkScheme(String file){
         score = 0;
         filename = file;
+        tests = new ArrayList<Test>();
         tests.add(new AttributeTest("private","Passenger","flightNo",filename));
         tests.add(new AttributeTest("private","int","destination",filename));
         tests.add(new AttributeTest("private","String","origin",filename));
@@ -29,5 +30,8 @@ public class FlightMarkScheme extends MarkScheme{
     }
     public void removeTest(Test t){
         tests.remove(t);
+    }
+    public String toString(){
+        return String.format("Flight Class : %d/16", execute());
     }
 }
