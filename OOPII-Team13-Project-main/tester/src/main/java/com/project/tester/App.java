@@ -17,21 +17,21 @@ public class App {
             System.out.println("Files have already been extracted. Skipping extraction.");
             return;
         }
-
+    
         try (ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(zipFileName))) {
             ZipEntry zipEntry;
-
+    
             while ((zipEntry = zipInputStream.getNextEntry()) != null) {
                 String entryName = zipEntry.getName();
                 String outputPath = outputFolder + File.separator + entryName;
-
+    
                 File entryFile = new File(outputPath);
-
+    
                 if (zipEntry.isDirectory()) {
                     entryFile.mkdirs();
                 } else {
                     new File(entryFile.getParent()).mkdirs();
-
+    
                     try (FileOutputStream fos = new FileOutputStream(entryFile)) {
                         int length;
                         while ((length = zipInputStream.read(buffer)) > 0) {
@@ -40,34 +40,44 @@ public class App {
                     }
                 }
                 if (entryName.endsWith(".zip")) {
+                    String nestedOutputFolder = outputFolder + File.separator + entryName.substring(0, entryName.lastIndexOf('.'));
+                    extractAndProcessStudentSubmissions(outputPath, nestedOutputFolder);
                 }
             }
         }
-    }
+    }    
 
-    public static void processStudentSubmission(String submissionPath) {
+    public static String processStudentSubmission(String submissionPath) {
         File submissionFile = new File(submissionPath);
         if (submissionFile.isFile() && submissionPath.endsWith(".zip")) {
             try {
-                extractAndProcessStudentSubmissions(submissionPath, "studentSubmission");
+                 String outputFolder = "extractedFiles_" + submissionFile.getName(); // Unique output folder for each submission
+                extractAndProcessStudentSubmissions(submissionPath, outputFolder);
+                return outputFolder;
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            } 
         }
+        return null;
     }
+    
+    //Daniel_Yorke_816019400_OOP1_A1.zip 
+    //Faith_Rose_ID_A1.zip
+    public static void processSubmission(Scanner in, PdfGenerator pdfFile) {
+        String pdfInformation = "";
+        double data = 0;
 
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        String pdfInformation = new String(); // here
-        PdfGenerator pdfFile = new PdfGenerator(); // here
-        double data = 0; // here
-
+        System.out.println("Student ID for this file: ");
+        String studentID = in.nextLine();
         System.out.println("Please input the zip file containing student submissions: ");
         String zipFileName = in.nextLine();
-        String outputFolder = "extractedFiles";
-//Daniel_Yorke_816019400_OOP1_A1.zip
-        File zipFile = new File(zipFileName);
+        System.out.println("Enter additional Path name e.g=/Assignment 1: ");
+        String additionalPath = in.nextLine();
         
+
+        String outputFolder = processStudentSubmission(zipFileName)+additionalPath;
+        System.out.println(outputFolder);
+        File zipFile = new File(zipFileName);
         if (!zipFile.exists() || !zipFile.isFile() || !zipFileName.endsWith(".zip")) {
             System.out.println("No valid zip file found.");
             in.close();
@@ -92,7 +102,7 @@ public class App {
                     fileNames.add(file.getName());
                 }
             }
-            
+
             List<TextSimilarityChecker> checkers = new ArrayList<>();
             TextSimilarityChecker checker;
             List<Double> similarityValues = new ArrayList<>();
@@ -101,32 +111,28 @@ public class App {
                 for (int j = i + 1; j < fileNames.size(); j++) {
                     for (int similarityMetric = 1; similarityMetric <= 8; similarityMetric++) {
                         //TextSimilarityChecker checker;
+                        //String assignmentFolder = outputFolder;
                         pdfInformation = "Passenger Class Feedback: \n";
                         if (similarityMetric == 1 ) {
                              System.out.println("-------------------------------------------------------- Attribute Feedback-----------------------------------------------------");
 
                             checker = new JaccardSimilarityChecker(similarityMetric);
-                            double checker1 = checker.evaluate("Spec/PassengerAttributeSpec.java","extractedFiles/Assignment 1/Passenger.java");
+                            double checker1 = checker.evaluate("Spec/PassengerAttributeSpec.java",outputFolder+"/Passenger.java");
                             similarityValues.add(checker1);
                             System.out.println(checker1);
 
                             checker = new JaccardSimilarityChecker(similarityMetric);
-                            double checker2 = checker.evaluate("Spec/LuggageSlipAttributeSpec.java","extractedFiles/Assignment 1/LuggageSlip.java");
+                            double checker2 = checker.evaluate("Spec/LuggageSlipAttributeSpec.java",outputFolder+"/LuggageSlip.java");
                             similarityValues.add(checker2);
                             System.out.println(checker2);
 
                             checker = new JaccardSimilarityChecker(similarityMetric);
-                            double checker3 = checker.evaluate("Spec/FlightAttributeSpec.java","extractedFiles/Assignment 1/Flight.java");
+                            double checker3 = checker.evaluate("Spec/FlightAttributeSpec.java",outputFolder+"/Flight.java");
                             similarityValues.add(checker3);
                             System.out.println(checker3);
-
-                            //checker = new JaccardSimilarityChecker(similarityMetric);
-                            //double checker4 = checker.evaluate("Spec/LuggageManagementSystem.java","extractedFiles/Assignment 1/LuggageManagementSystem.java");
-                            //similarityValues.add(checker4);
-                            //System.out.println(checker4); 
                             
                             checker = new JaccardSimilarityChecker(similarityMetric);
-                            double checker5 = checker.evaluate("Spec/LuggageManifestAttributeSpec.java","extractedFiles/Assignment 1/LuggageManifest.java");
+                            double checker5 = checker.evaluate("Spec/LuggageManifestAttributeSpec.java",outputFolder+"/LuggageManifest.java");
                             similarityValues.add(checker5);
                             System.out.println(checker5);
                             //System.out.println(data);
@@ -134,54 +140,45 @@ public class App {
                         }else if (similarityMetric == 2) {
                             System.out.println("----------------------------------------------------Class Signature Feedback----------------------------------------------------");
                             checker = new JaccardSimilarityChecker(similarityMetric);
-                            data = checker.evaluate("Spec/PassengerClassSignatures.java", "extractedFiles/Assignment 1/Passenger.java");
+                            data = checker.evaluate("Spec/PassengerClassSignatures.java", outputFolder+"/Passenger.java");
                             checkers.add(checker);
                             System.out.println(data);
 
                             checker = new JaccardSimilarityChecker(similarityMetric);
-                            data= checker.evaluate("Spec/LuggageSlipClassSignatures.java","extractedFiles/Assignment 1/LuggageSlip.java");
+                            data= checker.evaluate("Spec/LuggageSlipClassSignatures.java",outputFolder+"/LuggageSlip.java");
                             checkers.add(checker);
                             System.out.println(data);
 
                             checker = new JaccardSimilarityChecker(similarityMetric);
-                            data= checker.evaluate("Spec/FlightClassSignatures.java","extractedFiles/Assignment 1/Flight.java");
+                            data= checker.evaluate("Spec/FlightClassSignatures.java",outputFolder+"/Flight.java");
                             checkers.add(checker);
                             System.out.println(data);
 
-                            checker = new JaccardSimilarityChecker(similarityMetric);
-                            data=  checker.evaluate("Spec/LuggageManagementSystemClassSignatures.java","extractedFiles/Assignment 1/LuggageManagementSystem.java");
-                            checkers.add(checker);
-                            System.out.println(data);
 
                             checker = new JaccardSimilarityChecker(similarityMetric);
-                            data= checker.evaluate("Spec/LuggageManifestClassSignatures.java","extractedFiles/Assignment 1/LuggageManifest.java");
+                            data= checker.evaluate("Spec/LuggageManifestClassSignatures.java",outputFolder+"/LuggageManifest.java");
                             checkers.add(checker);
                             System.out.println(data);
                             pdfInformation += "PassengerClassSignatures: " + data;
                         } else if (similarityMetric == 3) {
                             System.out.println("-------------------------------------------------------Class States Feedback------------------------------------------------------");
                             checker = new JaccardSimilarityChecker(similarityMetric);
-                            double checker1 = checker.evaluate("Spec/PassengerStates.java", "extractedFiles/Assignment 1/Passenger.java");
+                            double checker1 = checker.evaluate("Spec/PassengerStates.java", outputFolder+"/Passenger.java");
                             similarityValues.add(checker1);
                             System.out.println(checker1);
 
                             //checker = new JaccardSimilarityChecker(similarityMetric);
-                            //checker.evaluate("Spec/LuggageSlipStates.java","extractedFiles/Assignment 1/LuggageSlip.java");
+                            //checker.evaluate("Spec/LuggageSlipStates.java",outputFolder+"/LuggageSlip.java");
                             //checkers.add(checker);
                             //System.out.println(data);
 
                             checker = new JaccardSimilarityChecker(similarityMetric);
-                            double checker2= checker.evaluate("Spec/FlightStates.java","extractedFiles/Assignment 1/Flight.java");
+                            double checker2= checker.evaluate("Spec/FlightStates.java",outputFolder+"/Flight.java");
                             similarityValues.add(checker2);
                             System.out.println(checker2);
 
-                            //checker = new JaccardSimilarityChecker(similarityMetric);
-                            //double checker4= checker.evaluate("Spec/LuggageManagementSystemStates.java","extractedFiles/Assignment 1/LuggageManagementSystem.java");
-                            //similarityValues.add(checker4);
-                            //System.out.println(checker4);
-
                             checker = new JaccardSimilarityChecker(similarityMetric);
-                            double checker3= checker.evaluate("Spec/LuggageManifestStates.java","extractedFiles/Assignment 1/LuggageManifest.java");
+                            double checker3= checker.evaluate("Spec/LuggageManifestStates.java",outputFolder+"/LuggageManifest.java");
                             similarityValues.add(checker3);
                             System.out.println(checker3);
 
@@ -189,27 +186,22 @@ public class App {
                         } else if (similarityMetric == 4) {
                             System.out.println("-------------------------------------------------------Access Modifier Feedback------------------------------------------------------");
                             checker = new JaccardSimilarityChecker(similarityMetric);
-                            double checker1= checker.evaluate("Spec/PassengerAccessModifiers.java", "extractedFiles/Assignment 1/Passenger.java");
+                            double checker1= checker.evaluate("Spec/PassengerAccessModifiers.java", outputFolder+"/Passenger.java");
                             similarityValues.add(checker1);
                             System.out.println(checker1);
 
                             checker = new JaccardSimilarityChecker(similarityMetric);
-                            double checker2= checker.evaluate("Spec/LuggageSlipAccessModifiers.java","extractedFiles/Assignment 1/LuggageSlip.java");
+                            double checker2= checker.evaluate("Spec/LuggageSlipAccessModifiers.java",outputFolder+"/LuggageSlip.java");
                             similarityValues.add(checker2);
                             System.out.println(checker2);
 
                             checker = new JaccardSimilarityChecker(similarityMetric);
-                            double checker3= checker.evaluate("Spec/FlightAccessModifiers.java","extractedFiles/Assignment 1/Flight.java");
+                            double checker3= checker.evaluate("Spec/FlightAccessModifiers.java",outputFolder+"/Flight.java");
                             similarityValues.add(checker3);
                             System.out.println(checker3);
 
                             checker = new JaccardSimilarityChecker(similarityMetric);
-                            double checker4= checker.evaluate("Spec/LuggageManagementSystemAccessModifiers.java","extractedFiles/Assignment 1/LuggageManagementSystem.java");
-                            similarityValues.add(checker4);
-                            System.out.println(checker4);
-
-                            checker = new JaccardSimilarityChecker(similarityMetric);
-                            double checker5= checker.evaluate("Spec/LuggageManifestAccessModifiers.java","extractedFiles/Assignment 1/LuggageManifest.java");
+                            double checker5= checker.evaluate("Spec/LuggageManifestAccessModifiers.java",outputFolder+"/LuggageManifest.java");
                             similarityValues.add(checker5);
                             System.out.println(checker5);
 
@@ -217,27 +209,22 @@ public class App {
                         } else if (similarityMetric == 5) {
                             System.out.println("--------------------------------------------------------Constructor Feedback--------------------------------------------------------");
                             checker = new JaccardSimilarityChecker(similarityMetric);
-                            double checker1 = checker.evaluate("Spec/PassengerConstructors.java", "extractedFiles/Assignment 1/Passenger.java");
+                            double checker1 = checker.evaluate("Spec/PassengerConstructors.java", outputFolder+"/Passenger.java");
                             similarityValues.add(checker1);
                             System.out.println(checker1);
                             
                             checker = new JaccardSimilarityChecker(similarityMetric);
-                            double checker2= checker.evaluate("Spec/LuggageSlipConstructors.java","extractedFiles/Assignment 1/LuggageSlip.java");
+                            double checker2= checker.evaluate("Spec/LuggageSlipConstructors.java",outputFolder+"/LuggageSlip.java");
                             similarityValues.add(checker2);
                             System.out.println(checker2);
 
                             checker = new JaccardSimilarityChecker(similarityMetric);
-                            double checker3= checker.evaluate("Spec/FlightConstructors.java","extractedFiles/Assignment 1/Flight.java");
+                            double checker3= checker.evaluate("Spec/FlightConstructors.java",outputFolder+"/Flight.java");
                             similarityValues.add(checker3);
                             System.out.println(checker3);
 
-                            //checker = new JaccardSimilarityChecker(similarityMetric);
-                            //double checker4= checker.evaluate("Spec/LuggageManagementSystemConstructors.java","extractedFiles/Assignment 1/LuggageManagementSystem.java");
-                            //similarityValues.add(checker4);
-                            //System.out.println(checker4);
-
                             checker = new JaccardSimilarityChecker(similarityMetric);
-                            double checker5= checker.evaluate("Spec/LuggageManifestConstructors.java","extractedFiles/Assignment 1/LuggageManifest.java");
+                            double checker5= checker.evaluate("Spec/LuggageManifestConstructors.java",outputFolder+"/LuggageManifest.java");
                             similarityValues.add(checker5);
                             System.out.println(checker5);
                             
@@ -246,18 +233,33 @@ public class App {
                     }
                 }
             }
+        
             pdfFile.createPDF(pdfInformation);
             // Perform operations with 'checkers'
-            in.close();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            // Handle closing resources here if necessary
         }
-        
-        
+    }
+    
+    public static void main(String[] args) {
+        try (Scanner in = new Scanner(System.in)) {
+            int submissionNumber = 0;
+
+            System.out.println("How many student submissions will you be processing?: ");
+            submissionNumber = in.nextInt();
+            in.nextLine();
+
+            PdfGenerator pdfFile = new PdfGenerator();
+
+            for (int o = 1; o <= submissionNumber; o++) {
+                processSubmission(in, pdfFile);
+
+                // Prompt for next submission details if there are more submissions
+                if (o < submissionNumber) {
+                    System.out.println("\nProcessing next submission...\n");
+                }
+            }
+        }
     }
 }
-
-
 
