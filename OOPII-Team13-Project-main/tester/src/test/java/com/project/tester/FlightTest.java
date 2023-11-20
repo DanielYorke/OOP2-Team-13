@@ -2,6 +2,7 @@ package com.project.tester;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+import org.junit.*;
 import java.time.LocalDateTime;
 
 
@@ -14,11 +15,11 @@ public class FlightTest {
         Flight testFlight = new Flight("ABC123", "Destination", "Origin", flightDateTime);
         
         // Create a passenger and check-in luggage for the valid flight
-        Passenger testPassenger = new Passenger("John", "Doe");
+        Passenger testPassenger = new Passenger("AB123456", "John", "Doe", "FL123");
         String checkInStatus = testFlight.checkInLuggage(testPassenger);
 
         // Ensure luggage check-in is successful for the valid flight
-        assertEquals("Luggage checked in successfully", checkInStatus);
+        assertEquals("Luggage checked in successfully", checkInStatus.toString());
     }
 
     @Test
@@ -28,7 +29,7 @@ public class FlightTest {
         Flight testFlight = new Flight("XYZ789", "Destination", "Origin", flightDateTime);
 
         // Create a passenger and try to check-in luggage for an invalid flight
-        Passenger testPassenger = new Passenger("Jane", "Smith");
+        Passenger testPassenger = new Passenger("AB123456", "Jane", "Smith", "FL123");
         String checkInStatus = testFlight.checkInLuggage(testPassenger);
 
         // Ensure luggage check-in fails for the invalid flight

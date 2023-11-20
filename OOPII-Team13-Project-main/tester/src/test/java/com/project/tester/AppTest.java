@@ -21,7 +21,7 @@ public class AppTest
     public void shouldAnswerWithTrue()
     {
         assertTrue( true );
-    }
+    //}
 
         Result result = JUnitCore.runClasses(LuggageSlipTest.class);
 

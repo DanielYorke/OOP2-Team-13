@@ -20,16 +20,16 @@ public class PassengerTest {
     @Test
     public void testNumLuggage(){
         Passenger testPassenger = new Passenger("AB123456", "John", "Doe", "FL123");
-        assertInstanceOf(int, testPassenger.getNumLuggage());
+        assertInstanceOf(int.class, testPassenger.getNumLuggage());
     }
-    
+
     @Test
     public void testAssignRandomCabinClass() {
         // Create a passenger instance
         Passenger testPassenger = new Passenger("CD789012", "Jane", "Smith", "FL456");
 
         // Ensure the random cabin class assignment is within the expected range
-        char cabinClass = testPassenger.toCharCc();
+        char cabinClass = testPassenger.getCabinClass();
         assertTrue(cabinClass == 'F' || cabinClass == 'B' || cabinClass == 'P' || cabinClass == 'E');
     }
 
@@ -39,7 +39,7 @@ public class PassengerTest {
         Passenger testPassenger = new Passenger("EF345678", "Alice", "Johnson", "FL789");
 
         // Ensure the toString() method returns the expected string format
-        String expectedOutput = "PP NO: EF345678 Name: A.Johnson NUMLUGGAGE: " + testPassenger.readNumLuggage() + " CLASS: " + testPassenger.toCharCc();
+        String expectedOutput = "PP NO: EF345678 Name: A.Johnson NUMLUGGAGE: " + testPassenger.getNumLuggage() + " CLASS: " + testPassenger.getCabinClass();
         assertEquals(expectedOutput, testPassenger.toString());
     }
 }

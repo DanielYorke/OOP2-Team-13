@@ -1,6 +1,9 @@
 package com.project.tester;
 
 import static org.junit.Assert.*;
+
+import java.time.LocalDateTime;
+
 import org.junit.*;
 
 
@@ -11,8 +14,11 @@ public class LuggageSlipTest {
     @Before
     public void setUp() {
         // Create sample Passenger and Flight objects for testing
-        passenger = new Passenger("John", "Doe", "AB123456", 2, 'E');
-        flight = new Flight("ABC123");
+        //passenger = new Passenger("John", "Doe", "AB123456", 2, 'E');
+        passenger = new Passenger("AB123456", "John", "Doe", "ABC123");
+
+        //flight = new Flight("ABC123");
+        flight = new Flight("ABC123", "TAB", "POS", LocalDateTime.of(2017, 1, 14, 10, 34));
     }
 
     @Test
