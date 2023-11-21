@@ -1,10 +1,7 @@
 package com.project.tester;
 
-//import java.util.ArrayList;
-
 public abstract class ClassEvaluation
 {
-    protected String className;
     protected String file1;
     protected String file2;
     protected int currentSimilarityMetric;
@@ -13,9 +10,8 @@ public abstract class ClassEvaluation
     protected FeedBack feedback;
     //protected ArrayList<String> information = new ArrayList<String>();
     
-    public ClassEvaluation(int currentSimilarityMetric, String file1, String file2, String classTestName)
+    public ClassEvaluation(int currentSimilarityMetric, String file1, String file2)
     {
-        this.className = classTestName;
         this.file1 = file1;
         this.file2 = file2;
         this.currentSimilarityMetric = currentSimilarityMetric;
@@ -45,10 +41,7 @@ public abstract class ClassEvaluation
     public String toString(){
         String evaluationDetails = "";
         
-        evaluationDetails = "Class Name: " + className
-                            //+ "File 1: " + file1
-                            //+ "File 2: " + file2
-                            + " Evaluation: " + evaluation
+        evaluationDetails = " Evaluation: " + evaluation
                             + " Feedback: " + getFeedBack();
         
         return evaluationDetails;
