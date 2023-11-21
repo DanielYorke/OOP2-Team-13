@@ -45,14 +45,17 @@ public class ReadInZipFile {
         }
     }
 
-    public static void processStudentSubmission(String submissionPath) {
+    public static String processStudentSubmission(String submissionPath) {
         File submissionFile = new File(submissionPath);
         if (submissionFile.isFile() && submissionPath.endsWith(".zip")) {
             try {
-                extractAndProcessStudentSubmissions(submissionPath, "studentSubmission");
+                 String outputFolder = "extractedFiles_" + submissionFile.getName(); // Unique output folder for each submission
+                extractAndProcessStudentSubmissions(submissionPath, outputFolder);
+                return outputFolder;
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            } 
         }
+        return null;
     }
 }
