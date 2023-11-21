@@ -41,8 +41,7 @@ public abstract class ClassEvaluation
     public String toString(){
         String evaluationDetails = "";
         
-        evaluationDetails = " Evaluation: " + evaluation
-                            + " Feedback: " + getFeedBack();
+        evaluationDetails = getFeedBack();
         
         return evaluationDetails;
     }
