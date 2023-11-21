@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class PdfGenerator {
-    public void createPDF(ArrayList<String> pdfInformation) {
+    public void createPDF(ArrayList<String> pdfInformation, String name) {
 
         try {
             ArrayList<String> pdfContents = new ArrayList<String>();
@@ -36,7 +36,7 @@ public class PdfGenerator {
 
             contentStream.close();
 
-            pdfDocument.save("Student-Feedback.pdf");
+            pdfDocument.save(name + "-Feedback.pdf");
 
             pdfDocument.close();
 
