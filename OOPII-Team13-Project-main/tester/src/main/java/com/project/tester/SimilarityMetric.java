@@ -1,5 +1,5 @@
 package com.project.tester;
 
 public interface SimilarityMetric {
-    double measure(String s1, String s2);
+    public double measure(String s1, String s2);
 }
