@@ -27,6 +27,7 @@ public abstract class TextSimilarityChecker {
     }
 
     protected abstract double calculateSimilarity(String text1, String text2);
+    
     protected Set<String> tokenize(String text) {  
         String[] words = text.split("\\s+");
         return new HashSet<>(List.of(words));
