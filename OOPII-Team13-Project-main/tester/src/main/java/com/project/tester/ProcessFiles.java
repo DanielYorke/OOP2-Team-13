@@ -19,20 +19,8 @@ public class ProcessFiles {
     }
 
 
-    public void processFiles(){
-        Scanner in = new Scanner(System.in);
+    public void processFiles(String zipFileName, String outputFolder){
 
-        System.out.println("Please input the zip file containing student submissions: ");
-        String zipFileName = in.nextLine();
-        String outputFolder = "extractedFiles";
-
-        File zipFile = new File(zipFileName);
-
-        if (!zipFile.exists() || !zipFile.isFile() || !zipFileName.endsWith(".zip")) {
-            System.out.println("No valid zip file found.");
-            in.close();
-            return; 
-        }
         try { // here uses the readinfile
             ReadInZipFile.extractAndProcessStudentSubmissions(zipFileName, outputFolder);
             System.out.println("Student submissions extracted and processed successfully.");
@@ -66,26 +54,24 @@ public class ProcessFiles {
                             fileProcessInformation.add(new JaccardEvaluator(similarityMetric, file1.get(3), file2));
                         } else if (similarityMetric == 5) {
                             fileProcessInformation.add(new JaccardEvaluator(similarityMetric, file1.get(4), file2));
-                        } else if (similarityMetric == 6) {
+                        } /*else if (similarityMetric == 6) {
                             fileProcessInformation.add(new JaccardEvaluator(similarityMetric, file1.get(5), file2));
                         } else if (similarityMetric == 7) {
                             fileProcessInformation.add(new JaccardEvaluator(similarityMetric, file1.get(6), file2));
                         } else if (similarityMetric == 8) {
                             fileProcessInformation.add(new JaccardEvaluator(similarityMetric, file1.get(7), file2));
-                        } 
+                        } */
                     }
                 }
             }
 
             // Perform operations with 'checkers'
-            in.close();
+            //in.close();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             // Handle closing resources here if necessary
         }
         
-        
-    
     }
 }
